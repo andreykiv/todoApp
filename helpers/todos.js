@@ -21,4 +21,35 @@ exports.createTodo =  function(req, res){
     })
 }
 
+exports.getTodo = function(req, res){
+    db.TodofindById(req.params.todoId)
+    .then(function(foundTodo){
+        res.json(foundTodo)
+    })
+    .catch(function(err){
+        res.send(err);
+    })
+}
+
+exports.updateTodo = function(req, res){
+    db.Todo.findOneAndUpdate({_id: req.params.todoId}, req.body, {new: true}) //the new true code makes that the request is responded with a new version. 
+    .then(function(todo){
+        res.json(todo);
+    })
+    .catch(function(err){
+        res.send(err);
+    })
+}
+
+exports.deleteTodo = function(req, res){
+    db.Todo.remove({_id: req.params.todoId})
+    .then(function(){
+        res.json({message: "We deleted that!"})
+    })
+    .catch(function(err){
+        res.send(err);
+    })
+}
+
+
 module.exports = exports;
