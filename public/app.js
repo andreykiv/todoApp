@@ -1,1 +1,12 @@
-alert("Hi from app.js!")
+$(document).ready(function(){
+    $.getJSON('/api/todos')
+    .then(addTodos)
+});
+
+    //add todos to page here
+function addTodos(todos) {
+    todos.forEach(function(todo){
+        var newTodo = $('<li class="task">'+todo.name + '</li>');
+        $('.list').append(newTodo);
+    });
+}
